@@ -4,40 +4,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacts</title>
+  <title>Agenda de contatos</title>
+  
 </head>
 <body>
   <h1>Agenda de Contatos</h1>
-  
   <form action="/create" method="POST">
-  <input name="name" placeholder="Nome">
-  <input name="email" placeholder="E-mail">
-  <input name="phone" placeholder="Telefone">
-  <button type="submit">Adicionar</button>
-  </form> 
-<ul>
-      {% for item in contacts %}
-  <li>
-    {% if item.complete == True %}
-    <s>{{ item.name }} </s>
-    <s>{{ item.email }}</s>
-    <s>{{ item.phone }}</s>
-    {% else %}
-  <form action="/update/{{loop.index0}}" method="POST">
-    <input name="name" value="{{item.name}}">
-    <input name="email" value="{{item.email}}">
-    <input name="phone" value="{{item.phone}}">
-      <button type="submit">Editar</button>
-<a href="/delete/{{loop.index0}}">❌</a>
-  </li>
-</form>
-  {% endif %}
-  {% endfor %}
-  {% for banco in new_contacts %}
-  <li class="banc">
-    
-  </li>
-</ul>
-</div>
+    <input name='name' placeholder='Nome'>
+    <input name='email' placeholder='Email'>
+    <input name='phone' placeholder='Telefone'>
+    <button type="submit">Adicionar</button>
+  </form>
+  <ul>
+    {% for c in contatos %}
+      <li> {{ c.name }}</li>
+        </a>
+      </li>
+        </form>
+    {% endfor %}
+    </ul>
+  
+  
 </body>
 </html>
