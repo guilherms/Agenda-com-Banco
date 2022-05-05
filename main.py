@@ -51,29 +51,6 @@ def create():
   db.session.commit()
   return redirect('/')
 
-@app.route('/delete/<int:id>')
-def delete(id):
- user = users.query.filter_by(id=id).first()
- db.session.delete(user)
- db.session.commit()
- return redirect('/')
-
-@app.route('/complete/<int:id>')
-def complete(id):
- user = users.query.filter_by(id=id).first()
- user.complete = True
- db.session.commit()
- return redirect('/')
-
-@app.route('/update/<int:index>', methods=['POST'])
-def update(id):
- name = request.form.get('name')
- user = users.query.filter_by(id=id).first()
- user.title = name
- db.session.commit()
- return redirect('/')
-
-
 if __name__ == '__main__':
   db.create_all()
   app.run(host='0.0.0.0', port=8080)
