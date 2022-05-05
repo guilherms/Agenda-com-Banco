@@ -32,7 +32,7 @@ contatos=[
 
 @app.route('/')
 def index():
-  user = User.query.all()
+  user = Users.query.all()
   contacts = Contacts.query.all()
   return render_template('index.html', user=user, contacts=contacts, contatos=contatos)
 
@@ -44,7 +44,7 @@ def create():
   contatos.append({
     'name': name, 'email': email, 'phone': phone
   })
-  new_user = User(name=name, email=email)
+  new_user = Users(name=name, email=email)
   new_contacts = Contacts(name=name, email=email, phone=phone)
   db.session.add(new_user)
   db.session.add(new_contacts)
@@ -53,14 +53,14 @@ def create():
 
 @app.route('/delete/<int:id>')
 def delete(id):
- user = User.query.filter_by(id=id).first()
+ user = Users.query.filter_by(id=id).first()
  db.session.delete(user)
  db.session.commit()
  return redirect('/')
 
 @app.route('/complete/<int:id>')
 def complete(id):
- user = User.query.filter_by(id=id).first()
+ user = Users.query.filter_by(id=id).first()
  user.complete = True
  db.session.commit()
  return redirect('/')
@@ -68,7 +68,7 @@ def complete(id):
 @app.route('/update/<int:index>', methods=['POST'])
 def update(id):
  name = request.form.get('name')
- user = User.query.filter_by(id=id).first()
+ user = Users.query.filter_by(id=id).first()
  user.title = name
  db.session.commit()
  return redirect('/')
