@@ -3,10 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask('app')
 app = Flask(__name__)
-app.config['SQALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-class Users(db.Model):
+class users(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100))
   email = db.Column(db.String(100))
@@ -14,7 +14,7 @@ class Users(db.Model):
   created_at = db.Column(db.String(100))
   updated_at = db.Column(db.String(100))
 
-class Contacts(db.Model):
+class contacts(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100))
   email = db.Column(db.String(100))
@@ -32,9 +32,9 @@ contatos=[
 
 @app.route('/')
 def index():
-  user = Users.query.all()
-  contacts = Contacts.query.all()
-  return render_template('index.html', user=user, contacts=contacts, contatos=contatos)
+  user = users.query.all()
+  new_contacts = contacts.query.all()
+  return render_template('index.html', user=user, new_contacts=new_contacts, contatos=contatos)
 
 @app.route('/create', methods=['POST'])
 def create():
@@ -44,8 +44,8 @@ def create():
   contatos.append({
     'name': name, 'email': email, 'phone': phone
   })
-  new_user = Users(name=name, email=email)
-  new_contacts = Contacts(name=name, email=email, phone=phone)
+  new_user = users(name=name, email=email)
+  new_contacts = contacts(name=name, email=email, phone=phone)
   db.session.add(new_user)
   db.session.add(new_contacts)
   db.session.commit()
@@ -53,14 +53,14 @@ def create():
 
 @app.route('/delete/<int:id>')
 def delete(id):
- user = Users.query.filter_by(id=id).first()
+ user = users.query.filter_by(id=id).first()
  db.session.delete(user)
  db.session.commit()
  return redirect('/')
 
 @app.route('/complete/<int:id>')
 def complete(id):
- user = Users.query.filter_by(id=id).first()
+ user = users.query.filter_by(id=id).first()
  user.complete = True
  db.session.commit()
  return redirect('/')
@@ -68,7 +68,7 @@ def complete(id):
 @app.route('/update/<int:index>', methods=['POST'])
 def update(id):
  name = request.form.get('name')
- user = Users.query.filter_by(id=id).first()
+ user = users.query.filter_by(id=id).first()
  user.title = name
  db.session.commit()
  return redirect('/')
